@@ -22,22 +22,24 @@ const { NotImplementedError } = require('../extensions/index.js');
   }
 
   enqueue( value ) {
+    let newNode = new ListNode(value);
     let current = this._queue;
-    this._queue = new ListNode(value);
-    if (current) {
-      this._queue.next = current;
-    } 
+    if(!current) {
+        this._queue = newNode 
+    } else {
+        while(current.next !== null) {
+            current = current.next;
+        }
+        current.next = newNode;
+    }
   }
 
-  dequeue() {
-    let current = this._queue;
-    let prev;
-    while(current.next !== null) {
-      prev = current;
-      current = current.next;
-    }
-    prev.next = null;
-    return current.value;
+dequeue() {
+    let current = this._queue.value;
+    let next = this._queue.next;
+    this._queue = next;
+
+    return current;
   }
 }
 
